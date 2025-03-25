@@ -1,7 +1,5 @@
 
 # Ging-Ging
-
-# Ging-Ging
 # For My Love - Digital Valentine
 
 A heartfelt digital expression of love featuring photos, sweet messages, and an interactive surprise element.
