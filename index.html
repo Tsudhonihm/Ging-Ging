@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/favicon.gif" type="image/gif">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css'>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Dancing Script', cursive;
+            margin: 0;
+            padding: 0;
+            background: #fff5f5;
+            color: #FF0000;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/bg-flower.png') no-repeat center center/cover;
+            padding: 100px 20px;
+            border-bottom: 2px solid #f48fb1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        /* Photo Gallery - Fixed proportions */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .photo-container {
+            border: 2px solid #f48fb1;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            aspect-ratio: 1/1;
+            position: relative;
+        }
+
+        .photo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Love Note Section */
+        .love-note {
+            padding: 40px 20px;
+            background: #ffebee;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .love-note h2 {
+            font-size: 2.5rem;
+            color: #d81b60;
+            margin-bottom: 20px;
+        }
+
+        /* Fizzy Button Styles */
+        .button {
+            position: relative;
+            margin: 40px auto;
+            text-align: center;
+            height: 200px;
+            width: 200px;
+        }
+
+        .button input {
+            display: none;
+        }
+
+        .button_inner {
+            border-radius: 2px;
+            position: absolute;
+            width: 200px;
+            height: 50px;
+            left: 0;
+            right: 0;
+            top: 50%;
+            margin: auto;
+            box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.04);
+            font-weight: 100;
+            font-size: 12px;
+            cursor: pointer;
+            border: 2px solid #FFFFFF;
+            color: white;
+            text-align: center;
+            transition: all 0.3s, box-shadow 0.2s, transform 0.2s 0.2s;
+            background: #d81b60;
+            transform: translateY(-50%);
+        }
+
+        .button_inner span.t {
+            position: relative;
+            top: 6px;
+            opacity: 1;
+            left: -10px;
+            transition: left 0.4s 0.1s;
+        }
+
+        .button_inner i.l {
+            position: relative;
+            left: -19px;
+            top: 20px;
+            color: #00C4FF;
+            font-size: 25px;
+            opacity: 0;
+            transition: left 0.3s 0s, top 0.3s 0s, opacity 0.3s 0s;
+        }
+
+        .button_inner:hover {
+            color: #2C3940;
+            background: white;
+            box-shadow: 0px 17px 18px -14px rgba(0, 0, 0, 0.08);
+        }
+
+        .button_inner:hover span.t {
+            left: 16px;
+            transition: left 0.4s;
+        }
+
+        .button_inner:hover i.l {
+            top: 12px;
+            opacity: 1;
+            transition: left 0.3s 0s, top 0.3s 0.1s, opacity 0.3s 0.1s;
+        }
+
+        .button_spots {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+
+        #particles-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: visible;
+            z-index: 1;
+        }
+
+        /* Particle Animations */
+        input:checked + label .button_inner {
+            background: transparent;
+            transform: translateY(-50%);
+            width: 50px !important;
+            height: 50px !important;
+            border-radius: 100px;
+            box-shadow: 0px 0px 0px 440px rgba(0, 0, 0, 0);
+            animation: finalbox 0.4s 4.42s cubic-bezier(0.39, 2.01, 0.27, 0.75) forwards;
+        }
+
+        input:checked + label .button_inner span.t {
+            opacity: 0;
+            top: 20px;
+        }
+
+        input:checked + label .tick {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            color: #00C1FC;
+            font-size: 22px;
+            animation: tick 0.3s 4.7s forwards;
+            opacity: 0;
+        }
+
+        input:checked + label .button_spots {
+            opacity: 1;
+        }
+
+        .tick {
+            position: absolute;
+            left: -40;
+            right: 0;
+            transform: scale(0);
+            margin: auto;
+            font-size: 22px;
+        }
+
+        @keyframes finalbox {
+            to { width: 50px; }
+        }
+
+        @keyframes tick {
+            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        @keyframes particle-move {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1>My Dearest Ging Ging</h1>
+        <p class="subtitle">A little corner of the internet just for you 💖</p>
+    </header>
+
+    <!-- Photo Gallery -->
+    <section class="gallery">
+        <div class="photo-container">
+            <img src="images/photo1.jpg" alt="Our Memory 1" class="gallery-photo">
+        </div>
+        <div class="photo-container">
+            <img src="images/photo2.jpg" alt="Our Memory 2" class="gallery-photo">
+        </div>
+        <div class="photo-container">
+            <img src="images/photo3.jpg" alt="Our Memory 3" class="gallery-photo">
+        </div>
+    </section>
+
+    <!-- Love Note Section -->
+    <section class="love-note">
+        <h2>You mean the world to me</h2>
+        <p id="dynamic-message">You make every day brighter. I love you endlessly!</p>
+        
+        <!-- Animated Fizzy Button -->
+        <div class="button">
+            <input type="checkbox" id="animatedButton">
+            <label for="animatedButton">
+                <div class="button_inner">
+                    <span class="t">Surprise Me</span>
+                    <i class="tick ion-checkmark-round"></i>
+                </div>
+                <div class="b_l_quad" id="particles-container"></div>
+            </label>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        // List of sayings
+        const sayings = [
+            "You are my sunshine on cloudy days.",
+            "I cherish every moment with you.",
+            "You are my forever and always.",
+            "My heart belongs to you.",
+            "Every day with you feels like a dream.",
+            "You light up my life with your smile.",
+            "No one makes me happier than you do.",
+            "You are my greatest blessing.",
+            "With you, life feels complete.",
+            "You are my heart's desire."
+        ];
+
+        // Function to display a random saying
+        function displayRandomSaying() {
+            const randomIndex = Math.floor(Math.random() * sayings.length);
+            document.getElementById('dynamic-message').textContent = sayings[randomIndex];
+        }
+
+        // Create particles with proper positioning
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            container.innerHTML = '';
+            
+            const colors = ['#ff9ff3', '#feca57', '#ff6b6b', '#48dbfb', '#1dd1a1'];
+            const particleCount = 52;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'button_spots';
+                
+                // Random properties
+                const size = Math.random() * 8 + 4;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 50 + Math.random() * 100;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                const duration = 2 + Math.random() * 2;
+                const delay = Math.random() * 0.5;
+                
+                particle.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${color};
+                    left: 50%;
+                    top: 50%;
+                    --tx: ${tx}px;
+                    --ty: ${ty}px;
+                    animation: particle-move ${duration}s ${delay}s forwards;
+                    z-index: 1;
+                `;
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Add change event listener to the button
+        document.getElementById('animatedButton').addEventListener('change', function() {
+            if (this.checked) {
+                displayRandomSaying();
+                createParticles();
+                
+                // Reset the button after animation completes
+                setTimeout(() => {
+                    this.checked = false;
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>
